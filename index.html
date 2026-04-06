@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page Designer — Clean, High-Converting Websites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --bg:       #F8F7F4;
+  --ink:      #0A0A0A;
+  --blue:     #2B2CF5;
+  --blue2:    #4445FF;
+  --blue-dim: rgba(43,44,245,0.08);
+  --blue-border: rgba(43,44,245,0.18);
+  --muted:    #6B6B6B;
+  --rule:     rgba(10,10,10,0.10);
+  --white:    #FFFFFF;
+  --serif:    'DM Serif Display', Georgia, serif;
+  --sans:     'DM Sans', Helvetica, sans-serif;
+  --mono:     'Space Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* noise overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 99px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3.5rem;
+  background: rgba(248,247,244,0.90);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.06); }
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--blue); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.55rem 1.4rem;
+  background: var(--blue);
+  color: white;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.25s;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(43,44,245,0.3); }
+
+/* ─── TICKER ─── */
+.ticker-wrap {
+  margin-top: 72px;
+  overflow: hidden;
+  border-top: 1px solid var(--blue-border);
+  border-bottom: 1px solid var(--blue-border);
+  padding: 10px 0;
+  background: var(--blue-dim);
+}
+.ticker-track {
+  display: flex; gap: 0;
+  animation: ticker 28s linear infinite;
+  width: max-content;
+}
+.ticker-track span {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue);
+  white-space: nowrap;
+  padding: 0 20px;
+}
+.ticker-track span.dot { color: rgba(43,44,245,0.3); padding: 0 4px; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 100px 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(43,44,245,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43,44,245,0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(43,44,245,0.10) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 2rem;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blue); }
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 900px;
+  position: relative; z-index: 2;
+  margin-bottom: 2rem;
+}
+h1 em { font-style: italic; color: var(--blue); }
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 500px;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+  position: relative; z-index: 2;
+}
+.hero-actions {
+  display: flex; gap: 1rem; align-items: center;
+  position: relative; z-index: 2;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.9rem 2.2rem;
+  background: var(--blue);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-primary:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(43,44,245,0.35); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.9rem 2.2rem;
+  border: 1.5px solid rgba(10,10,10,0.18);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+.hero-ghost {
+  position: absolute; right: -2%; bottom: -5%;
+  font-family: var(--serif);
+  font-size: clamp(140px, 22vw, 340px);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(10,10,10,0.03);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  pointer-events: none; user-select: none; z-index: 1;
+}
+.hero-meta {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-top: 4rem; padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  position: relative; z-index: 2;
+}
+.hero-stats { display: flex; gap: 3.5rem; }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
+.stat-num sup { color: var(--blue); font-size: 0.5em; }
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.stars { color: var(--blue); font-size: 0.85rem; letter-spacing: 2px; }
+
+/* ─── SHARED ─── */
+section { padding: 120px 3.5rem; }
+.sec-head {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 72px;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.sec-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.sec-rule { flex: 1; height: 1px; background: var(--rule); }
+.sec-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: rgba(10,10,10,0.12);
+}
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 640px;
+  margin-bottom: 1.5rem;
+}
+h2 em { font-style: italic; color: var(--blue); }
+
+/* ─── SOCIAL PROOF ─── */
+.proof-section { background: var(--ink); color: white; }
+.proof-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+  align-items: center;
+}
+.proof-section .sec-label { color: rgba(255,255,255,0.4); }
+.proof-section .sec-rule { background: rgba(255,255,255,0.08); }
+.proof-section .sec-num { color: rgba(255,255,255,0.08); }
+.proof-section h2 { color: white; max-width: 100%; }
+.proof-section h2 em { color: #5F61FF; }
+.reviews { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+.review-card {
+  padding: 1.5rem 1.75rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  transition: border-color 0.3s;
+}
+.review-card:hover { border-color: rgba(95,97,255,0.4); }
+.review-stars { color: #5F61FF; font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 0.75rem; }
+.review-text { font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.65; font-style: italic; }
+.review-author { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 0.75rem; }
+.proof-stats { display: flex; flex-direction: column; gap: 2rem; }
+.big-stat { border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 2rem; }
+.big-stat:last-child { border-bottom: none; padding-bottom: 0; }
+.big-stat-num {
+  font-family: var(--serif);
+  font-size: 4.5rem;
+  font-weight: 400;
+  color: white;
+  line-height: 1;
+}
+.big-stat-num span { color: #5F61FF; }
+.big-stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.45); margin-top: 0.4rem; }
+.check-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 2rem; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: rgba(255,255,255,0.65);
+}
+.check-icon {
+  width: 20px; height: 20px;
+  background: rgba(95,97,255,0.15);
+  border: 1px solid rgba(95,97,255,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.6rem;
+  color: #5F61FF;
+}
+
+/* ─── PORTFOLIO ─── */
+.portfolio-section { background: var(--bg); }
+.portfolio-inner { max-width: 1200px; margin: 0 auto; }
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 20px; overflow: hidden;
+}
+.portfolio-card {
+  background: var(--white);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.portfolio-card:hover { background: #FAFAFE; }
+.p-num {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(43,44,245,0.12);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.p-type {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+}
+.p-title {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.p-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+.p-tag {
+  display: inline-block;
+  margin-top: 1.2rem;
+  padding: 0.3rem 0.85rem;
+  background: var(--blue-dim);
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 99px;
+  border: 1px solid var(--blue-border);
+}
+
+/* ─── WHAT YOU GET ─── */
+.get-section { background: var(--white); }
+.get-inner { max-width: 1200px; margin: 0 auto; }
+.get-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.feature-list { display: flex; flex-direction: column; gap: 0; margin-top: 1rem; }
+.feature-item {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: padding-left 0.3s;
+}
+.feature-item:first-child { border-top: 1px solid var(--rule); }
+.feature-item:hover { padding-left: 6px; }
+.feature-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  color: var(--blue);
+  margin-top: 2px;
+}
+.feature-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.feature-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+.why-list { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+.why-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.95rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--bg);
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  transition: all 0.25s;
+}
+.why-item:hover { border-color: var(--blue-border); background: var(--blue-dim); }
+.why-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0;
+}
+
+/* ─── FAQ ─── */
+.faq-section { background: var(--bg); }
+.faq-inner { max-width: 800px; margin: 0 auto; }
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
+.faq-item:first-child { border-top: 1px solid var(--rule); }
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+.faq-q:hover { color: var(--blue); }
+.faq-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.faq-item.open .faq-icon { background: var(--blue); color: white; border-color: var(--blue); transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.faq-a-inner {
+  padding-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ─── CTA SECTION ─── */
+.cta-section {
+  background: var(--blue);
+  color: white;
+  text-align: center;
+  padding: 120px 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 400;
+  color: white;
+  line-height: 1.05;
+  max-width: 720px;
+  margin: 0 auto 1.5rem;
+}
+.cta-section h2 em { font-style: italic; color: rgba(255,255,255,0.55); }
+.cta-sub { font-size: 1.05rem; color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; }
+.btn-white {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 1rem 2.5rem;
+  background: white;
+  color: var(--blue);
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 48px rgba(0,0,0,0.25); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.35);
+  padding: 2rem 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.footer-logo span { color: #5F61FF; }
+.footer-copy { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; }
+
+/* ─── ANIMATIONS ─── */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links-desktop { display: none; }
+  section { padding: 80px 1.5rem; }
+  h1 { font-size: 3rem; }
+  .hero { padding: 80px 1.5rem 3rem; }
+  .proof-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .get-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-meta { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .hero-stats { gap: 2rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Studio<span>.</span></a>
+  <a href="https://www.fiverr.com/s/2K27WqN" target="_blank" class="nav-cta">
+    Order on Fiverr →
+  </a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>Landing Page Design</span><span class="dot">·</span>
+    <span>Clean & Modern UI</span><span class="dot">·</span>
+    <span>Mobile Friendly</span><span class="dot">·</span>
+    <span>Fast Delivery</span><span class="dot">·</span>
+    <span>100% Satisfaction</span><span class="dot">·</span>
+    <span>Source File Included</span><span class="dot">·</span>
+    <span>Conversion Focused</span><span class="dot">·</span>
+    <span>Landing Page Design</span><span class="dot">·</span>
+    <span>Clean & Modern UI</span><span class="dot">·</span>
+    <span>Mobile Friendly</span><span class="dot">·</span>
+    <span>Fast Delivery</span><span class="dot">·</span>
+    <span>100% Satisfaction</span><span class="dot">·</span>
+    <span>Source File Included</span><span class="dot">·</span>
+    <span>Conversion Focused</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-eyebrow">Landing Page Designer</div>
+
+  <h1>
+    I Design <em>Clean</em><br>
+    &amp; High-Converting<br>
+    Landing Pages
+  </h1>
+
+  <p class="hero-sub">
+    Helping your business look more professional, trustworthy, and ready to convert visitors into actual customers.
+  </p>
+
+  <div class="hero-actions">
+    <a href="https://www.fiverr.com/s/2K27WqN" target="_blank" class="btn-primary">
+      👉 Order Now on Fiverr
+    </a>
+    <a href="#portfolio" class="btn-secondary">
+      See My Work ↓
+    </a>
+  </div>
+
+  <div class="hero-ghost">Design.</div>
+
+  <div class="hero-meta">
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">10<sup>+</sup></div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div>
+        <div class="stat-num">100<sup>%</sup></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div>
+        <div class="stat-num">2–5</div>
+        <div class="stat-label">Day Delivery</div>
+      </div>
+    </div>
+    <div>
+      <div class="stars">★★★★★</div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;font-family:var(--mono);letter-spacing:0.08em;">Rated on Fiverr</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-section fade-in">
+  <div class="proof-inner">
+    <div>
+      <div class="sec-head">
+        <span class="sec-label">Social Proof</span>
+        <div class="sec-rule"></div>
+        <span class="sec-num">01</span>
+      </div>
+      <h2>Trusted by clients <em>worldwide</em></h2>
+      <div class="reviews">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Very fast, clean design, and exactly what I needed. Highly recommended!"</p>
+          <div class="review-author">— Verified Buyer, United States</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Great communication and amazing result. Will definitely order again!"</p>
+          <div class="review-author">— Verified Buyer, United Kingdom</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-stats">
+      <div class="big-stat">
+        <div class="big-stat-num">10<span>+</span></div>
+        <div class="big-stat-label">Projects successfully completed</div>
+      </div>
+      <div class="big-stat">
+        <div class="big-stat-num">100<span>%</span></div>
+        <div class="big-stat-label">Client satisfaction rate</div>
+      </div>
+      <div class="check-list">
+        <div class="check-item"><div class="check-icon">✓</div>Fast turnaround time</div>
+        <div class="check-item"><div class="check-icon">✓</div>Clear communication</div>
+        <div class="check-item"><div class="check-icon">✓</div>Revisions until satisfied</div>
+        <div class="check-item"><div class="check-icon">✓</div>Source file always included</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section fade-in" id="portfolio">
+  <div class="portfolio-inner">
+    <div class="sec-head">
+      <span class="sec-label">Portfolio</span>
+      <div class="sec-rule"></div>
+      <span class="sec-num">02</span>
+    </div>
+    <h2>Recent <em>works</em> I'm proud of</h2>
+    <p style="color:var(--muted);margin-bottom:3rem;font-size:0.95rem;">Here are some of my recent landing page projects.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="p-num">01</div>
+        <div class="p-type">Business</div>
+        <div class="p-title">Modern Business Landing Page</div>
+        <p class="p-desc">Clean design that improved brand image and made the business look more professional online.</p>
+        <span class="p-tag">Brand Credibility</span>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-num">02</div>
+        <div class="p-type">Startup</div>
+        <div class="p-title">Startup Landing Page</div>
+        <p class="p-desc">Conversion-focused layout designed to turn visitors into leads with clear CTA structure.</p>
+        <span class="p-tag">Conversion Focused</span>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-num">03</div>
+        <div class="p-type">Product</div>
+        <div class="p-title">Product Showcase Page</div>
+        <p class="p-desc">Better user experience and mobile optimization that increased engagement significantly.</p>
+        <span class="p-tag">Mobile Optimized</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET + WHY ME -->
+<section class="get-section fade-in">
+  <div class="get-inner">
+    <div class="sec-head">
+      <span class="sec-label">Services</span>
+      <div class="sec-rule"></div>
+      <span class="sec-num">03</span>
+    </div>
+    <div class="get-grid">
+      <div>
+        <h2>What you'll <em>get</em></h2>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">✦</div>
+            <div>
+              <div class="feature-title">Clean & Modern UI Design</div>
+              <div class="feature-desc">A visually polished layout that looks professional and builds instant trust.</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div>
+              <div class="feature-title">Fully Responsive</div>
+              <div class="feature-desc">Looks perfect on desktop, tablet, and mobile — no compromises.</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <div class="feature-title">Fast Loading Performance</div>
+              <div class="feature-desc">Optimized code that loads quickly and keeps visitors from bouncing.</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎯</div>
+            <div>
+              <div class="feature-title">Conversion-Focused Layout</div>
+              <div class="feature-desc">Strategic structure designed to guide visitors toward taking action.</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📦</div>
+            <div>
+              <div class="feature-title">Source File Included</div>
+              <div class="feature-desc">Full source files delivered so you own everything, forever.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>Why choose <em>me</em></h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;line-height:1.65;">I don't just make things look good. I design with purpose — every element has a reason to be there.</p>
+        <div class="why-list">
+          <div class="why-item"><div class="why-dot"></div>Fast response & clear communication</div>
+          <div class="why-item"><div class="why-dot"></div>Revisions until you're 100% satisfied</div>
+          <div class="why-item"><div class="why-dot"></div>Focus on results, not just aesthetics</div>
+          <div class="why-item"><div class="why-dot"></div>Understand small business & startup needs</div>
+          <div class="why-item"><div class="why-dot"></div>Reliable, easy, and stress-free to work with</div>
+        </div>
+        <a href="https://www.fiverr.com/s/2K27WqN" target="_blank" class="btn-primary" style="margin-top:2.5rem;display:inline-flex;">
+          Start Your Project →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section fade-in">
+  <div class="faq-inner">
+    <div class="sec-head">
+      <span class="sec-label">FAQ</span>
+      <div class="sec-rule"></div>
+      <span class="sec-num">04</span>
+    </div>
+    <h2 style="margin-bottom:3rem;">Common <em>questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          How long does it take?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Usually 2–5 days depending on the complexity of your project. I'll give you a clear timeline upfront before we start.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          Do you provide revisions?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes, I offer revisions until you're fully satisfied with the result. Your happiness with the final product matters most to me.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          Will it be mobile-friendly?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Absolutely. Every landing page I design is fully responsive and tested across different screen sizes — desktop, tablet, and mobile.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          Do I get the source file?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes, all source files are included with every delivery. You'll own the complete files and can use them however you want.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          What information do you need to start?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Just your business name, a brief description of what you do, your target audience, and any style preferences or references you like. I'll handle the rest!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section fade-in">
+  <div class="cta-bg"></div>
+  <h2>
+    Ready to upgrade<br>your <em>website?</em>
+  </h2>
+  <p class="cta-sub">Don't let your website look outdated. Start converting more visitors into customers today.</p>
+  <a href="https://www.fiverr.com/s/2K27WqN" target="_blank" class="btn-white">
+    👉 Order Now on Fiverr
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Studio<span>.</span></div>
+  <div class="footer-copy">© 2025 — Landing Page Design Services</div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Fade in observer
+const faders = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+faders.forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+</body>
+</html>
